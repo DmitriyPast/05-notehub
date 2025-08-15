@@ -7,8 +7,10 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import NoteList from "../NoteList/NoteList";
 import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal";
-import SearchBar from "../SearchBox/SearchBox";
+// import SearchBar from "../SearchBox/SearchBox";
 import { useDebounce } from "use-debounce";
+import NoteForm from "../NoteForm/NoteForm";
+import SearchBox from "../SearchBox/SearchBox";
 
 export default function App() {
   // const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -21,7 +23,7 @@ export default function App() {
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ["notes", queryDebounced, page],
     queryFn: () => fetchNotes(queryDebounced, page),
-    enabled: query !== "",
+    // enabled: query !== "",
     placeholderData: keepPreviousData,
   });
 
@@ -43,7 +45,7 @@ export default function App() {
     <div className={css.app}>
       <header className={css.toolbar}>
         {/* Компонент SearchBox */}
-        {<SearchBar onChange={(query) => setQuery(query)} />}
+        {<SearchBox onChange={(query) => setQuery(query)} />}
         {/* Пагінація */}
         {data && data.totalPages > 0 && (
           <Pagination
@@ -62,7 +64,11 @@ export default function App() {
       {query && isLoading && !data && <>Loading notes...</>}
       {query && isError && <>Error occured</>}
       {data && data.notes.length > 0 && <NoteList noteList={data.notes} />}
-      {modalOpen && <Modal onClose={handleClose} />}
+      {modalOpen && (
+        <Modal onClose={handleClose}>
+          <NoteForm onClose={handleClose} />
+        </Modal>
+      )}
       <Toaster />
     </div>
   );

@@ -1,11 +1,11 @@
 // import toast from "react-hot-toast";
 import css from "./SearchBox.module.css";
 
-interface searchBarProps {
+interface SearchBarProps {
   onChange: (query: string) => void;
 }
 
-export default function SearchBar({ onChange }: searchBarProps) {
+export default function SearchBox({ onChange }: SearchBarProps) {
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const query = e.target.value.trim();
     // if (query === "") {

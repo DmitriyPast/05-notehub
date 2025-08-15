@@ -53,10 +53,10 @@ export async function fetchNotes(
   return res.data;
 }
 
-export async function createNote(formData: NoteFormValues) {
-  return await axios.post(url, formData);
+export async function createNote(formData: NoteFormValues): Promise<Note> {
+  return (await axios.post(url, formData)).data.notes;
 }
 
-export async function deleteNote(noteId: string) {
+export async function deleteNote(noteId: string): Promise<Note> {
   return await axios.delete(`${noteId}`);
 }
